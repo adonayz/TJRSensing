@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">TJR Sensing</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="walk_instructions_title">Walk in a straight line</string>
+    <string name="walk_instructions_detail">Walk for 1 minute. \nPhone will beep and vibrate at the end.</string>
+    <string name="wear_collection_preference">wear_collection_preference</string>
+    <string name="wear_lock_preference">wear_lock_preference</string>
+    <string name="box_integration_preference">box_integration_preference</string>
+    <string name="refresh_watch_connection">Refresh Watch Connection</string>
+    <string name="collecting_from_watch">Collecting Data From Watch</string>
+    <string name="searching">Searching For Watch</string>
+    <string name="watch_reachability_error_dialog">The watch is either not connected to the phone or does not have the app installed. We recommend that you save your current progress and leave the session. If you want to record without the watch in the future, go back to \'Settings\' in the home page and disable the \'Watch Data Collection\' feature.</string>
+    <string name="sbs_instructions">Stand with your feet together for about 30 seconds. You
+may use your arms, bend your knees, or move your body to maintain balance but you may
+not move your feet. Try to hold the position until the phone beeps and vibrates
+</string>
+    <string name="ts_instructions">Stand with the heel of one foot in front of the toes of the
+other foot for about 30 seconds. You can put whichever foot is more comfortable forward.
+You may use your arms, bend your knees, or move your body to maintain balance but you
+may not move your feet. Try to hold the position until the phone beeps and vibrates
+</string>
+    <string name="ols_instructions">Stand on one leg for about 30 seconds. You can use
+whichever leg you prefer. You may use your arms, bend your knees, or move your body to
+maintain balance but you may not move your foot or touch your other foot down. Try to hold
+the position until the phone beeps and vibrates.
+</string>
+    <string name="wt_instructions">Walk 36 meters (Down and back 2x). You will start next to this cone behind this line. Walk down to the cone at the other end of
+the walkway, around it, and return to this cone 2x. Walk at your normal, everyday walking
+pace. Do not come to a stop until you are past the starting cone.
+</string>
+    <string name="crt_instructions">Fold your arms across your chest and sit so that your feet are a
+comfortable width apart on the floor. Stand up fully, keeping your arms folded, and
+return to a seated position. Try to rise from this chair without using your
+arms.
+You will repeat this standing and sitting as quickly as possible
+for about 30 seconds, making sure you stand fully and return to touch down on the seat with
+each repetition.
+</string>
+</resources>

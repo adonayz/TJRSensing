@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.wpi.alcogaitdatagatherer.ui.activities.SurveyFormActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbarParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/survey_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4sp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36sp"
+            android:layout_marginStart="@dimen/margin_left"
+            android:layout_marginEnd="@dimen/margin_right"
+            android:paddingBottom="140sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Information"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Subject ID:"
+                android:layout_marginTop="30sp"/>
+
+            <EditText
+                android:id="@+id/subjectIDInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number|none"
+                android:maxLength="3"
+                android:digits="0123456789"
+                android:hint="Subject ID (0 - 9999)"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/genderRadioGroup" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Gender:"
+                android:layout_marginTop="30sp"/>
+
+            <RadioGroup
+                android:id="@+id/genderRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15sp"
+                android:backgroundTint="@color/colorAccent"
+                android:foregroundTint="@color/colorAccent"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/dateInput" >
+                <RadioButton
+                    android:id="@+id/maleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="@color/colorAccent"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/femaleRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:layout_marginStart="20sp"
+                    android:textColor="@color/colorAccent"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Age:"
+                android:layout_marginTop="30sp"/>
+
+            <EditText
+                android:id="@+id/ageInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                android:inputType="number|none"
+                android:maxLength="2"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/weightInput" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Weight:"
+                android:layout_marginTop="30sp"/>
+
+            <EditText
+                android:id="@+id/weightInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLength="6"
+                android:hint="Pounds (lbs)"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/heightFeetInput"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Height:"
+                android:layout_marginTop="30sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/heightFeetInput"
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|none"
+                    android:maxLength="1"
+                    android:digits="0123456789"
+                    android:hint="Feet"
+                    android:imeOptions="actionNext"
+                    android:nextFocusRight="@+id/heightInchesInput"/>
+                <EditText
+                    android:id="@+id/heightInchesInput"
+                    android:layout_width="75sp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|none"
+                    android:maxLength="2"
+                    android:digits="0123456789"
+                    android:imeOptions="actionDone"
+                    android:hint="Inches"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/submitButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

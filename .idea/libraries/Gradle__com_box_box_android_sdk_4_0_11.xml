@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.box:box-android-sdk-4.0.11">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/box-android-sdk-4.0.11.aar/cb53030550b1b7fd3d7e96d041c3627d/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/box-android-sdk-4.0.11.aar/cb53030550b1b7fd3d7e96d041c3627d/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.box/box-android-sdk/4.0.11/390ebb57fdabd8c2bdc228eefaa3fc9edff21bbc/box-android-sdk-4.0.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
