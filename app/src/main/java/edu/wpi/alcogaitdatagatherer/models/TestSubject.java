@@ -26,11 +26,9 @@ public class TestSubject implements Serializable {
     private int heightInches;
     private WalkHolder currentWalkHolder;
     private LinkedList<Boolean> booleanWalksList; // changed from Walk Object to Integer in order to decrease memory usage
-    private HashMap<Integer, Integer> sampleSizeMap;
     //private LinkedList<Walk> successfulWalks;
     //private LinkedList<Walk> reportedWalks;
     private String reportMessage;
-    private int startingWalkNumber;
 
     public TestSubject(String subjectID, Gender gender, int age, double weight, int heightFeet, int heightInches) {
         this.subjectID = subjectID;
@@ -40,11 +38,9 @@ public class TestSubject implements Serializable {
         this.heightFeet = heightFeet;
         this.heightInches = heightInches;
         this.booleanWalksList = new LinkedList<>();
-        this.sampleSizeMap = new HashMap<>();
         //successfulWalks = new LinkedList<>();
         //reportedWalks = new LinkedList<>();
         reportMessage = "";
-        startingWalkNumber = 1;
     }
 
     public String getSubjectID() {
@@ -87,10 +83,6 @@ public class TestSubject implements Serializable {
         booleanWalksList = list;
     }
 
-    public HashMap<Integer, Integer> getSampleSizeMap() {
-        return sampleSizeMap;
-    }
-
     public WalkHolder getCurrentWalkHolder() {
         return currentWalkHolder;
     }
@@ -99,11 +91,11 @@ public class TestSubject implements Serializable {
         this.currentWalkHolder = walkHolder;
     }
 
-    public void addNewWalkHolder(WalkHolder currentWalkHolder) {
+    /*public void addNewWalkHolder(WalkHolder currentWalkHolder) {
         addSamplesSize(this.currentWalkHolder.getWalkNumber(), this.currentWalkHolder.getSampleSize());
         setCurrentWalkHolder(currentWalkHolder);
         booleanWalksList.add(false);
-    }
+    }*/
 
     public void setWalkTypeDialog(SensorRecorder sensorRecorder, Context context) {
         AtomicReference<WalkType> walkType = new AtomicReference<WalkType>();
@@ -119,7 +111,6 @@ public class TestSubject implements Serializable {
         final RadioButton rd_crt = dialog.findViewById(R.id.rd_crt);
         final AppCompatTextView okButton = dialog.findViewById(R.id.okButton);
 
-        //title.setText("Select Amount Of Walk Types To Record For Walk #" + getCurrentWalkHolder().getWalkNumber());
         title.setText("Select Type Of Walk To Record");
 
         okButton.setOnClickListener(view -> {
@@ -138,30 +129,22 @@ public class TestSubject implements Serializable {
             if (rd_crt.isChecked()) {
                 walkType.set(WalkType.CRT);
             }
-            setCurrentWalkHolder(new WalkHolder(walkType.get()));
+            if(walkType.get()==null){
+                return;
+            }
+            currentWalkHolder.setWalkType(walkType.get());
+            if(currentWalkHolder.hasWalk(walkType.get())){
+                sensorRecorder.rePurposeStartButton();
+            }
             dialog.dismiss();
             sensorRecorder.updateWalkNumberDisplay();
             sensorRecorder.updateTitleAndInstructions(walkType.get());
         });
-        // now that the dialog is set up, it's time to show it
         dialog.show();
     }
 
     public void replaceWalkHolder(WalkHolder currentWalkHolder) {
-        sampleSizeMap.remove(currentWalkHolder.getWalkNumber());
         this.currentWalkHolder = currentWalkHolder;
-    }
-
-    /*public int getTotalSampleSize() {
-        int total = 0;
-        for (Iterator<Integer> it = sampleSizeMap.keySet().iterator(); it.hasNext(); ) {
-            total += sampleSizeMap.get(it.next());
-        }
-        return total;
-    }*/
-
-    public void addSamplesSize(int walkNumber, int sampleSize) {
-        sampleSizeMap.put(walkNumber, sampleSize);
     }
 
     public String printInfo() {
@@ -171,40 +154,11 @@ public class TestSubject implements Serializable {
                 + String.valueOf(heightInches) + "''\n";
     }
 
-    public int getStartingWalkNumber() {
-        return startingWalkNumber;
+    public void addToBooleanWalkList(){
+        booleanWalksList.add(false);
     }
 
-    public void setStartingWalkNumber(int startingWalkNumber) {
-        this.startingWalkNumber = startingWalkNumber;
+    public void removeFromBooleanWalkList(){
+        booleanWalksList.removeLast();
     }
-
-    // HUGE DESIGN (DATA STRUCTURE) CHANGES TO DECREASE MEMORY USAGE
-    /*public void addWalk(Walk walk){
-        successfulWalks.add(walk);
-    }
-
-    public LinkedList<Walk> getSuccessfulWalks() {
-        return successfulWalks;
-    }
-
-    public void setSuccessfulWalks(LinkedList<Walk> successfulWalks) {
-        this.successfulWalks = successfulWalks;
-    }
-
-    public LinkedList<Walk> getReportedWalks() {
-        return reportedWalks;
-    }
-
-    public void setReportedWalks(LinkedList<Walk> reportedWalks) {
-        this.reportedWalks = reportedWalks;
-    }
-
-    public void clearWalkData(){
-        successfulWalks.clear();
-    }
-
-    public Walk removeLastWalk(){
-        return successfulWalks.removeLast();
-    }*/
 }

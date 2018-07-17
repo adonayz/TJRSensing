@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/fragmentListWalkNumber"
+            android:id="@+id/fragmentListWalkType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

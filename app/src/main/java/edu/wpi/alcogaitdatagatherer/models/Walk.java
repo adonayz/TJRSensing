@@ -9,14 +9,11 @@ import java.util.LinkedList;
 
 public class Walk implements Serializable {
     private WalkType walkType;
-    private int walkNumber;
     private LinkedList<String[]> phoneAccelerometerDataList;
     private LinkedList<String[]> phoneGyroscopeDataList;
     private LinkedList<String[]> compassDataList;
-    private int watchSampleSize = 0;
 
-    public Walk(int walkNumber, WalkType walkType) {
-        this.walkNumber = walkNumber;
+    public Walk(WalkType walkType) {
         this.walkType = walkType;
         phoneAccelerometerDataList = new LinkedList<>();
         phoneGyroscopeDataList = new LinkedList<>();
@@ -25,10 +22,6 @@ public class Walk implements Serializable {
 
     public WalkType getWalkType() {
         return walkType;
-    }
-
-    public int getWalkNumber() {
-        return walkNumber;
     }
 
     public void addPhoneAccelerometerData(String[] sensorData) {
@@ -44,11 +37,7 @@ public class Walk implements Serializable {
     }
 
     public int getSampleSize(){
-        return phoneAccelerometerDataList.size() + phoneGyroscopeDataList.size() + compassDataList.size() + watchSampleSize;
-    }
-
-    public void addWatchSampleSize(int sampleSize) {
-        this.watchSampleSize = sampleSize;
+        return phoneAccelerometerDataList.size() + phoneGyroscopeDataList.size() + compassDataList.size();
     }
 
     public LinkedList<LinkedList<String[]>> toCSVFormat() {

@@ -1,6 +1,7 @@
 package edu.wpi.alcogaitdatagatherer.models;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -9,35 +10,36 @@ import java.util.LinkedList;
 
 public class WalkHolder implements Serializable {
     private WalkType walkType;
-    private LinkedList<Walk> walks;
+    private HashMap<WalkType, Walk> walkMap;
 
-    public WalkHolder(WalkType walkType) {
-        walks = new LinkedList<>();
-        this.walkType = walkType;
+    public WalkHolder() {
+        walkMap = new HashMap<>();;
     }
 
-    public int getWalkNumber() {
-        return walks.size()+1;
-    }
-
-    public Walk get(int walkNumber) {
-        return walks.get(walkNumber-1);
+    public Walk getWalk(WalkType walkType) {
+        return walkMap.get(walkType);
     }
 
     public WalkHolder addWalk(Walk walk) {
-        walks.add(walk);
+        walkMap.put(walk.getWalkType(), walk);
         return this;
     }
 
-    public WalkHolder removeWalk(int walkNumber) {
-        walks.remove(walkNumber-1);
+    public WalkHolder removeWalk(WalkType walkType) {
+        walkMap.remove(walkType);
         return this;
+    }
+
+    public boolean hasWalk(WalkType walkType) {
+        return walkMap.containsKey(walkType) || walkMap.get(walkType)!=null;
     }
 
     public int getSampleSize() {
         int total = 0;
-        for (Walk walk : walks) {
-            total+=walk.getSampleSize();
+        for (WalkType walkType : WalkType.values()) {
+            if (walkMap.containsKey(walkType)) {
+                total += walkMap.get(walkType).getSampleSize();
+            }
         }
         return total;
     }
@@ -46,7 +48,18 @@ public class WalkHolder implements Serializable {
         return walkType;
     }
 
-    public void setWalkType(WalkType walkType) {
+    public WalkHolder setWalkType(WalkType walkType) {
         this.walkType = walkType;
+        return this;
+    }
+
+    public LinkedList<WalkType> getRecordedWalkTypeList(){
+        LinkedList<WalkType> walkTypes = new LinkedList<>();
+        for(WalkType type: WalkType.values()){
+            if(hasWalk(type)){
+                walkTypes.add(type);
+            }
+        }
+        return walkTypes;
     }
 }

@@ -32,6 +32,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,10 +57,10 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
     private Button startButton;
     private Button stopButton;
     private TextView walkNumberDisplay;
-    private AppCompatTextView restartButton, reDoWalkButton, changeTypeButton, finishButton;
+    private AppCompatTextView changeTypeButton, finishButton;
     private TextView walkLogDisplay;
     private FrameLayout progressBarHolder;
-    private LinearLayout bottomBarLayout;
+    private RelativeLayout bottomBarLayout;
 
     private String mFolderName;
     private CountDownTimer countDownTimer;
@@ -100,8 +101,6 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
         startButton = findViewById(R.id.start_recording);
         stopButton = findViewById(R.id.stop_recording);
         walkNumberDisplay = findViewById(R.id.walkNumberDisplay);
-        restartButton = findViewById(R.id.restartButton);
-        reDoWalkButton = findViewById(R.id.redoWalkButton);
         changeTypeButton = findViewById(R.id.changeTypeButton);
         finishButton = findViewById(R.id.finishButton);
         walkLogDisplay = findViewById(R.id.walkLogDisplay);
@@ -118,23 +117,6 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
 
         stopButton.setOnClickListener(view -> {
             stopRecording();
-        });
-
-        restartButton.setOnClickListener(view -> {
-            sensorRecorder.restartCurrentWalkNumber(this, this);
-            countDownTimer.onTick(CommonCode.RECORD_TIME_IN_SECONDS * 1000);
-        });
-
-        reDoWalkButton.setOnClickListener(view -> {
-            if (sensorRecorder.getTestSubject().getCurrentWalkHolder().getWalkNumber()>1) {
-                reDoWalkButton.setError(null);
-                sensorRecorder.reDoWalk(this);
-            } else {
-                reDoWalkButton.setError("");
-                createToolTip(reDoWalkButton, Tooltip.Gravity.TOP, "You can only re-do walks from the same walk number. " +
-                        "You have not recorded any data for the current walk number (#"
-                        + sensorRecorder.getTestSubject().getCurrentWalkHolder().getWalkNumber() + ").");
-            }
         });
 
         finishButton.setOnClickListener(view -> {
@@ -159,23 +141,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
             final AlertDialog.Builder builder = new AlertDialog.Builder(DataGatheringActivity.this);
             builder.setTitle("Report Walks");
             builder.setMessage("Would you like to submit a report about any of the walks?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener);
-
-            DialogInterface.OnClickListener dialogClickListener2 = (dialog, which) -> {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        builder.show();
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            };
-            AlertDialog.Builder builder2 = new AlertDialog.Builder(DataGatheringActivity.this);
-            builder2.setTitle("Finish Survey");
-            builder2.setMessage("Are you sure you want to finish survey? Unfinished walk number data will be lost (Walk Number " +
-                    sensorRecorder.getTestSubject().getCurrentWalkHolder().getWalkNumber() + ").").setPositiveButton("Yes", dialogClickListener2)
-                    .setNegativeButton("No", dialogClickListener2).show();
+                    .setNegativeButton("No", dialogClickListener).show();
         });
 
         changeTypeButton.setOnClickListener(new View.OnClickListener() {
@@ -184,8 +150,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
                 DialogInterface.OnClickListener dialogClickListener3 = (dialog, which) -> {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            sensorRecorder.prepareWalkStorage(getApplicationContext());
-                            requestSave();
+                            testSubject.setWalkTypeDialog(sensorRecorder, walkNumberDisplay.getContext());
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -251,10 +216,6 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
             setupTimer();
             stopButton.setVisibility(View.GONE);
 
-            // TODO WAIT FOR WATCH AFTER EACH WALK
-            /*if (!isWearablePreferenceEnabled()) {
-                resetRecordViews(sensorRecorder.stopRecording());
-            }*/
             resetRecordViews();
         }
     }
@@ -305,6 +266,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
     }
 
     public void requestSave(){
+        sensorRecorder.prepareWalkStorage();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -428,8 +390,8 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(DataGatheringActivity.this);
         builder.setTitle("Return To Subject Information Form?");
-        builder.setMessage("Are you sure you want to return to the form? Data for the latest walk number will be lost (#"
-                + sensorRecorder.getTestSubject().getCurrentWalkHolder().getWalkNumber() + ")").setPositiveButton("Yes", dialogClickListener)
+        builder.setMessage("Are you sure you want to return to the form? Data for the latest walk type will be lost (#"
+                + sensorRecorder.getTestSubject().getCurrentWalkHolder().getWalkType() + ")").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
@@ -464,5 +426,14 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
                 this.startActivity(intent);
             }
         }
+    }
+    public void resetStartButton(){
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecording();
+            }
+        });
+        startButton.setText("START");
     }
 }

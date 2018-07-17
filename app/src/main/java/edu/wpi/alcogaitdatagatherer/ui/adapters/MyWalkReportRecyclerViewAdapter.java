@@ -13,6 +13,7 @@ import java.util.LinkedList;
 
 import edu.wpi.alcogaitdatagatherer.R;
 import edu.wpi.alcogaitdatagatherer.models.TestSubject;
+import edu.wpi.alcogaitdatagatherer.models.WalkType;
 import edu.wpi.alcogaitdatagatherer.ui.fragments.WalkReportFragment;
 
 public class MyWalkReportRecyclerViewAdapter extends RecyclerView.Adapter<MyWalkReportRecyclerViewAdapter.ViewHolder> implements CompoundButton.OnCheckedChangeListener {
@@ -47,9 +48,9 @@ public class MyWalkReportRecyclerViewAdapter extends RecyclerView.Adapter<MyWalk
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // If view is not the text box (EditText)
         if (!(position == checkBoxStates.size())) {
-            holder.walkNumber = position + 1 + (testSubject.getStartingWalkNumber() - 1);
-            holder.walkNumberView.setText("Walk " + holder.walkNumber);
-            holder.walkDetailsView.setText(testSubject.getSampleSizeMap().get(holder.walkNumber) + " data samples");
+            holder.walkType = testSubject.getCurrentWalkHolder().getRecordedWalkTypeList().get(position);
+            holder.walkTypeView.setText(holder.walkType.toString());
+            holder.walkDetailsView.setText(testSubject.getCurrentWalkHolder().getWalk(holder.walkType).getSampleSize() + " data samples");
             holder.checkBox.setTag(position);
             holder.checkBox.setChecked(checkBoxStates.get(position));
             holder.checkBox.setOnCheckedChangeListener(this);
@@ -85,15 +86,15 @@ public class MyWalkReportRecyclerViewAdapter extends RecyclerView.Adapter<MyWalk
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final TextView walkNumberView;
+        final TextView walkTypeView;
         final TextView walkDetailsView;
         final CheckBox checkBox;
-        int walkNumber;
+        WalkType walkType;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
-            walkNumberView = (TextView) view.findViewById(R.id.fragmentListWalkNumber);
+            walkTypeView = (TextView) view.findViewById(R.id.fragmentListWalkType);
             walkDetailsView = (TextView) view.findViewById(R.id.fragmentListWalkDetails);
             checkBox = (CheckBox) view.findViewById(R.id.walkSelectionCheckBox);
             walkReportMessageInput = (EditText) view.findViewById(R.id.walkReportMessageInput);
@@ -101,7 +102,7 @@ public class MyWalkReportRecyclerViewAdapter extends RecyclerView.Adapter<MyWalk
 
         @Override
         public String toString() {
-            return super.toString() + " 'Walk " + walkNumber + "'";
+            return super.toString() + " 'Walk Type" + walkType + "'";
         }
     }
 

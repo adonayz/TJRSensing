@@ -14,7 +14,7 @@ public enum WalkType {
     SBS("SIDE BY SIDE", "SIDE_BY_SIDE"),
     TS("TANDEM STANCE", "TANDEM_STANCE"),
     OLS("ONE LEG STANCE", "ONE_LEG_STANCE"),
-    WT("36 METER WALK", "WALK_TEST"),
+    WT("36 METER WALK", "36M_WALK_TEST"),
     CRT("CHAIR RISE TEST", "CHAIR_RISE_TEST");
 
     String walkTypeString;
