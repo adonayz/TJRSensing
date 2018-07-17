@@ -335,7 +335,6 @@ public class HomeActivity extends AppCompatActivity implements BoxAuthentication
                                 return;
                             }
                             TestSubject testSubject = extractTestSubjectInfo(reportFile, subjectID);
-                            testSubject.setStartingWalkNumber(maxWalks + 1);
 
                             Intent intent = new Intent(HomeActivity.this, DataGatheringActivity.class);
                             intent.putExtra("test_subject", testSubject);
