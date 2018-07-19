@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "edu.wpi.alcogaitdatagatherer"
+        applicationId "edu.wpi.tjr_sensing"
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
@@ -39,7 +39,5 @@ dependencies {
     implementation 'com.github.lzyzsd:circleprogress:1.1.0'
     implementation 'com.android.support:preference-v7:27.1.1'
     implementation 'com.google.android.gms:play-services-wearable:15.0.1'
-    wearApp project(':wear')
-    implementation project(':common')
     testImplementation 'junit:junit:4.12'
 }

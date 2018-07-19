@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:name="edu.wpi.alcogaitdatagatherer.WalkReportFragment"
+    android:name="edu.wpi.tjr_sensing.WalkReportFragment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="70sp"
@@ -10,7 +10,7 @@
     android:layout_marginRight="50sp"
     android:layout_marginBottom="50sp"
     android:background="@drawable/fragment_background"
-    tools:context="edu.wpi.alcogaitdatagatherer.ui.fragments.WalkReportFragment">
+    tools:context="edu.wpi.tjr_sensing.ui.fragments.WalkReportFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
