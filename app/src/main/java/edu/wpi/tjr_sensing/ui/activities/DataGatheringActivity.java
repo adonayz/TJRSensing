@@ -42,6 +42,7 @@ import edu.wpi.tjr_sensing.R;
 import edu.wpi.tjr_sensing.models.SensorRecorder;
 import edu.wpi.tjr_sensing.models.TestSubject;
 import edu.wpi.tjr_sensing.models.WalkType;
+import edu.wpi.tjr_sensing.ui.CountDownAnimation;
 import edu.wpi.tjr_sensing.ui.fragments.WalkReportFragment;
 import edu.wpi.tjr_sensing.ui.receivers.AdminReceiver;
 import it.sephiroth.android.library.tooltip.Tooltip;
@@ -53,8 +54,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
 
     public static final int RECORD_TIME_IN_SECONDS = 30;
 
-    private TextView countdownTextField;
-    private TextView countdown_title;
+    private TextView countdownTextField, countdown_title, overlayCountDownTextField;
     private Button startButton;
     private Button stopButton;
     private TextView walkNumberDisplay;
@@ -99,6 +99,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
         countdownTextField = findViewById(R.id.countdown);
         countdownTextField.setText(Integer.toString(RECORD_TIME_IN_SECONDS));
         countdown_title = findViewById(R.id.countdown_title);
+        overlayCountDownTextField = findViewById(R.id.overlayCountdownTextView);
         startButton = findViewById(R.id.start_recording);
         stopButton = findViewById(R.id.stop_recording);
         walkNumberDisplay = findViewById(R.id.walkNumberDisplay);
@@ -112,9 +113,7 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
     }
 
     private void configureButtons(){
-        startButton.setOnClickListener(v -> {
-            startRecording();
-        });
+        normalStartButtonFunction();
 
         stopButton.setOnClickListener(view -> {
             stopRecording();
@@ -435,12 +434,30 @@ public class DataGatheringActivity extends AppCompatActivity implements WalkRepo
         }
     }
     public void resetStartButton(){
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startRecording();
-            }
-        });
+        normalStartButtonFunction();
         startButton.setText("START");
+    }
+    public void normalStartButtonFunction(){
+        startButton.setOnClickListener(v -> {
+            startProgressBar();
+            CountDownAnimation countDownAnimation = new CountDownAnimation(overlayCountDownTextField, 5);
+            countDownAnimation.start();
+
+            countDownAnimation.setCountDownListener(new CountDownAnimation.CountDownListener() {
+                @Override
+                public void onCountDownEnd(CountDownAnimation animation) {
+                    startRecording();
+                    stopProgressBar();
+                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+                    toneGen1.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP,1000);
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    if (v != null) {
+                        v.vibrate(1000);
+                    } else {
+                        showToast("UNABLE TO VIBRATE");
+                    }
+                }
+            });
+        });
     }
 }

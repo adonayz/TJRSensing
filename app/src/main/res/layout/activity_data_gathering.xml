@@ -160,26 +160,38 @@
         android:focusable="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center">
 
-            <ProgressBar
+            <!--<ProgressBar
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:layout_gravity="center" />
-
+                android:layout_gravity="center" />-->
 
             <TextView
-                android:id="@+id/wearConnectProgressUpdateTextView"
+                android:id="@+id/overlayCountdownTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="5"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="50sp"
+                android:layout_gravity="center"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Connecting to watch..."
-                android:textSize="20sp"/>
+                android:text="Put the phone in your pocket"
+                android:textSize="28sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="40sp"/>
         </LinearLayout>
     </FrameLayout>
 
